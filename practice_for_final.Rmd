@@ -71,7 +71,7 @@ A copy of the paper can be found in the project file for this exercise.
 
 Is there an effect of litter type (single vs. multiple cubs) and effect of mother's experience level (first time vs. experienced) on weight gain in black bear cubs? Is there an interaction between these factors?
 
-### Practice 2
+### Practice 3
 
 **Fire and Lizard Sprint Speed**
 
@@ -98,29 +98,35 @@ ggplot(sprint, aes(x = hindlimb_mm, y = speed_25cm, colour = site)) +
   #this method allows regression lines to be heterogeneous
   theme_bw(15)
 ```
+
 ```{r}
 model1<-lm(speed_25cm ~ hindlimb_mm*site, data=sprint)
 summary(model1)
 ```
+
 ```{r}
 model2<-lm(speed_25cm ~ hindlimb_mm+site, data=sprint)
 summary(model2)
 ```
+
 ```{r}
 anova(model1, model2)
 ```
+
 ```{r}
 predictions_model2 <- predict(model2) 
 #calculate regression lines ('predictions') from model2 by using
 #every value of X to get the predicted value of Y
 predictions_model2
 ```
+
 ```{r}
 ggplot(sprint, aes(x = hindlimb_mm, y = speed_25cm, color = site) ) +
      geom_point() +
      geom_line(aes(y = predictions_model2)) +
   theme_bw(15)
 ```
+
 ```{r}
 emmeans_25cm <- emmeans(model2, "site") %>% 
   multcomp::cld(Letters=letters) 
